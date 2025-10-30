@@ -1,0 +1,82 @@
+https://docs.flutter.dev/install/with-vs-code
+1. Cài đặt VS Code
+2. Cài extension flutter
+https://marketplace.visualstudio.com/items?itemName=Dart-Code.flutter
+3. Cài Flutter với VS Code
+Control + Shift + P
+gõ: flutter, chọn [Flutter: New Project]
+Khi chưa có SDK thì nhấn nút [Download SDK] -> chọn thư mục để cài đặt [Flutter SDK]
+
+Xem trạng thái sau khi cài đặt:
+	flutter doctor -v
+
+4. Update flutter: 
+Chạy lệnh: flutter upgrade
+
+5. Cài Android Command Line Tools
+https://developer.android.com/studio#command-tools
+- Tải và giải nén vào thư mục C:\Android
+- Tạo thư mục latest bên trong thư mục [cmdline-tools]
+- Di chuyển tất cả file trong thư mục cmdline-tools ban đầu vào thư mục [latest]
+Thêm biến môi trường:
+ANDROID_HOME=C:\Android
+Path += %ANDROID_HOME%\platform-tools
+Path += %ANDROID_HOME%\cmdline-tools\latest\bin
+
+6. Tải và cài đặt Java JDK
+https://adoptium.net/temurin/releases/?version=17
+Thêm biến môi trường JAVA_HOME: C:\Program Files\Eclipse Adoptium\jdk-17.0.16.8-hotspot
+Thêm biến môi trường vào path để nhận diện là java: %JAVA_HOM%\bin
+
+7. Mở CMD vào thư mục [C:\Android\cmdline-tools\bin] và chạy lệnh sau:
+.\sdkmanager.bat --sdk_root=C:\Android "platform-tools" "platforms;android-33" "build-tools;33.0.2"
+
+8. Config android-sdk flutter
+flutter config --android-sdk C:\Android
+
+9. Tạo máy ảo android:
+Tải image
+	CMD: .\sdkmanager.bat --sdk_root=C:\Android "system-images;android-30;google_apis;x86_64"
+Kiểm tra:
+	CMD: .\sdkmanager.bat --list | findstr system-images
+Cài mày ảo:
+	CMD: .\avdmanager.bat create avd -n flutter_emulator -k "system-images;android-30;google_apis;x86_64" -d "pixel_3"
+Đặt giới hạn RAM:
+	mở file config: %USERPROFILE%\.android\avd\flutter_emulator.avd
+	Gới hạn 1.5GB: thêm dòng sau
+	hw.ramSize=1536
+	hoặc khởi động với lệnh sau:
+	C:\Android\emulator\emulator.exe -avd flutter_emulator -memory 1024 -no-snapshot -no-boot-anim
+
+
+10. Start máy ảo android
+C:\Android\emulator\emulator.exe -avd flutter_emulator
+
+
+11. Chạy project:
+	chạy lệnh sau cho android
+		flutter run -d emulator-5554
+	web
+		flutter run -d web
+
+dọn dẹp khi bị đơ
+	CMD:
+		taskkill /F /IM java.exe
+		taskkill /F /IM gradle*
+Xóa file lock
+	Xóa toàn bộ thư mục [.gradle] trong thư mục project/android
+Chạy lệnh:
+	flutter clean
+	flutter pub cache repair
+	flutter pub get
+
+fix lỗi nếu có:
+flutter doctor --android-licenses
+
+
+------------------------------------
+Bất đồng bộ sẽ dùng đối tượng "future":
+	- Future<String> → sau này sẽ có một chuỗi.
+	- Future<List> → sau này sẽ có một danh sách.
+	- Future<void> → chỉ để báo xong, không trả dữ liệu.
+	- Load dữ liệu bất đồng bộ cho UI: FutureBuilder
