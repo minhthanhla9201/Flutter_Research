@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart' as cs;
+import 'package:flutter_application/config/app_routes.dart';
 import '../models/movie.dart';
 
 class MovieBannerSlider extends StatelessWidget{
@@ -33,7 +34,7 @@ class MovieBannerSlider extends StatelessWidget{
   Widget _buildMovieItem(BuildContext context, Movie movie) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, '/detail', arguments: movie);
+        Navigator.pushNamed(context, AppRoutes.detail, arguments: movie);
       },
       child: ClipRRect(
         borderRadius: BorderRadius.circular(16),

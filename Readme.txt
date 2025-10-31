@@ -3,16 +3,22 @@ lib/
  ├── main.dart
  ├── config/
  │    └── api.dart               // URL API, cấu hình chung
+ │    └── app_routes.dart		   // Định nghĩa route cho các màn hình
+ ├── middleware/
+ │    └── auth_guard.dart			// Xử lý check login
  ├── models/
  │    └── movie.dart             // Định nghĩa Movie model
- ├── providers
+ │    └── ticket.dart            // Định nghĩa Ticket model
+ ├── providers/
  │    └── auth_provider.dart	  // Quản lý đăng nhập
  ├── screens/
  │    ├── home_screen.dart       // Trang danh sách banner
  │    └── login_screen.dart      // Trang login
  │    └── movie_detail_screen.dart     // Trang chi tiết phim
  ├── services/
- │    └── api_service.dart       // Gọi API từ server Node.js
+ │    └── api_auth_service.dart	// Gọi API sử dụng cho đăng nhập từ server Node.js
+ │    └── api_movie_service.dart	// Gọi API sử dụng cho movie từ server Node.js
+
  └── widgets/
       ├── movie_banner_slider.dart // Widget hiển thị banner phim slider (dùng thư viện carousel_slider)
       └── app_footer.dart      	// Widget hiển thị footer
@@ -65,6 +71,7 @@ Server:
     ];
   }
   Thêm file middleware.ts để xử lý chung của các request
+  Cài thêm thư viện để tạo id: npm install uuid
 
 Khởi động sever
 	docker run -it --rm -v "%cd%":/app -w /app -p 3000:3000 --entrypoint sh node:20-alpine

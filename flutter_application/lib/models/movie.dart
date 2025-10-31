@@ -68,7 +68,7 @@ class Movie {
     required this.isHot,
     required this.releaseDate,
     required this.theaters,
-    this.isLocal = false
+    this.isLocal = false,
   });
 
   factory Movie.fromJson(Map<String, dynamic> json) {

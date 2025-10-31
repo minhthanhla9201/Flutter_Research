@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application/config/app_routes.dart';
 import '../models/movie.dart';
 
 class MovieDetailScreen extends StatelessWidget {
@@ -27,7 +28,43 @@ class MovieDetailScreen extends StatelessWidget {
             _buildBanner(context, movie),
             // Nội dung chi tiết
             _buildMovieDetails(context, movie),
+            const SizedBox(height: 80), // chừa chỗ cho nút đặt vé bên dưới
           ],
+        ),
+      ),
+      // 🔽 Thêm phần nút đặt vé cố định
+      bottomNavigationBar: Container(
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Color.fromRGBO(0, 0, 0, 0.1), // Thay Colors.black.withOpacity(0.1)
+              blurRadius: 8,
+              offset: const Offset(0, -2),
+            ),
+          ],
+        ),
+        child: ElevatedButton(
+          onPressed: () {
+            Navigator.pushNamed(context, AppRoutes.booking, arguments: movie);
+          },
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.deepOrange,
+            padding: const EdgeInsets.symmetric(vertical: 14),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+            elevation: 4,
+          ),
+          child: const Text(
+            "🎟️ Đặt vé ngay",
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
+          ),
         ),
       ),
     );

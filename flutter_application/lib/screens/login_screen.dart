@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../services/api_service.dart';
+import '../services/api_auth_service.dart';
 
 class LoginScreen extends StatefulWidget{
   final Function(Map<String, dynamic> user, String token) onLogin;
@@ -13,7 +13,7 @@ class _LoginScreenState extends State<LoginScreen>{
   final _formKey = GlobalKey<FormState>();
   final _userNameController = TextEditingController();
   final _passwordController = TextEditingController();
-  final ApiService _api = ApiService();
+  final ApiAuthService _api = ApiAuthService();
   bool _isLoading = false;
 
   Future<void> _login() async {

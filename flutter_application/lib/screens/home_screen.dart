@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application/config/app_routes.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/auth_provider.dart';
 import '../models/movie.dart';
-import '../services/api_service.dart';
+import '../services/api_movie_service.dart';
 import '../widgets/movie_banner_slider.dart';
 import '../widgets/horizontal_movie_list.dart';
 import '../widgets/app_footer.dart';
@@ -16,7 +17,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
-  final ApiService api = ApiService();
+  final ApiMovieService movieApi = ApiMovieService();
   late Future<List<Movie>> movies;
   late TabController _tabController;
   late ScrollController _scrollController;
@@ -43,20 +44,30 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
   Future<void> _refreshData() async {
     setState(() {
-      movies = api.fetchMovies();
+      movies = movieApi.fetchMovies();
     });
   }
 
   void _onMenuSelected(String value, AuthProvider auth) {
-    if (value == 'login') {
-      Navigator.pushNamed(context, '/login');
-    } else if (value == 'logout') {
-      auth.logout();
-    } else if (value == 'profile' && auth.user != null) {
-      // Navigate to profile
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text('Chào ${auth.user?['name']}')));
+    switch (value) {
+      case 'login':
+        Navigator.pushNamed(context, AppRoutes.login);
+        break;
+      case 'logout':
+        auth.logout();
+        break;
+      case 'profile':
+        if (auth.user != null){
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(SnackBar(content: Text('Chào ${auth.user?['name']}')));
+        }
+        break;
+      case 'my-ticket':
+        Navigator.pushNamed(context, AppRoutes.myTickets);
+        break;
+      default:
+        break;
     }
   }
 
